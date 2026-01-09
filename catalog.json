@@ -1,0 +1,36 @@
+{
+  "instructions": [
+    {
+      "name": "another",
+      "path": "library/instructions/another/another.instructions.md",
+      "meta": {
+        "description": "Standards for new React components",
+        "tags": [
+          "frontend",
+          "react",
+          "style"
+        ],
+        "languages": [
+          "javascript",
+          "typescript"
+        ]
+      }
+    },
+    {
+      "name": "npm",
+      "path": "library/instructions/npm/npm.instructions.md",
+      "meta": {
+        "description": "Standards for new React components",
+        "tags": [
+          "frontend",
+          "react",
+          "style"
+        ],
+        "languages": [
+          "javascript",
+          "typescript"
+        ]
+      }
+    }
+  ]
+}
