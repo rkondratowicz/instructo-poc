@@ -60,8 +60,10 @@ The `library/agent-guidance.json` file provides LLM agents with:
 To add a new resource:
 
 1. Create a new directory under the appropriate type folder in `library/`
-2. Add `_meta.json` with proper metadata and tags
-3. Create the content file with the correct extension
+2. Create the content file with the correct extension (`.instructions.md`, `.prompt.md`, or skill file)
+3. Use the `create-metadata` prompt to automatically generate the `_meta.json` file:
+   - The prompt analyzes your content and creates appropriate metadata with tags, description, and languages
+   - Run the agent with the `.github/prompts/create-metadata.prompt.md` prompt, providing your content file
 4. Run `npm run generate` to update the catalog
 
 ⚠️ **IMPORTANT**: Never manually edit `catalog.json`. The catalog is automatically generated from the library contents. Any manual changes will be overwritten when the catalog is regenerated.
@@ -104,7 +106,7 @@ The pipeline runs automatically on:
 When contributing new resources:
 
 - Follow established naming conventions in `library/README.md`
-- Include comprehensive metadata with relevant tags
+- Use the `create-metadata` prompt to automatically generate comprehensive metadata with relevant tags
 - Ensure content is clear and actionable
 - Test catalog generation and validation
 - Update documentation as needed

@@ -18,10 +18,9 @@
 			"type": "string",
 			"description": "Short explanation used in catalogs or UIs"
 		},
-		"languages": {
-			"type": "array",
-			"items": { "type": "string" },
-			"description": "Optional list of languages this instruction is relevant to"
+		"author": {
+			"type": "string",
+			"description": "The author of the instruction"
 		}
 	},
 	"additionalProperties": false

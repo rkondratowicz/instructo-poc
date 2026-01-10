@@ -1,6 +1,6 @@
 {
 	"$schema": "../../../schemas/instruction-meta.schema.json",
-	"description": "Standards for new React components",
-	"tags": ["frontend", "react", "style"],
-	"languages": ["javascript", "typescript"]
+	"description": "Package management standards and security practices",
+	"tags": ["npm", "package-management", "security"],
+	"author": "John Smith"
 }

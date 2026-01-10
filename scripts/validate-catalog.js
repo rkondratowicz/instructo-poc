@@ -69,7 +69,9 @@ async function validateCatalog() {
 	if (!fs.existsSync(catalogPath)) {
 		errors.push("catalog.json does not exist");
 		console.log("Validation failed:");
-		errors.forEach((error) => console.log(`- ${error}`));
+		errors.forEach((error) => {
+			console.log(`- ${error}`);
+		});
 		return false;
 	}
 
@@ -81,7 +83,9 @@ async function validateCatalog() {
 	} catch (error) {
 		errors.push(`Failed to parse catalog.json: ${error.message}`);
 		console.log("Validation failed:");
-		errors.forEach((error) => console.log(`- ${error}`));
+		errors.forEach((error) => {
+			console.log(`- ${error}`);
+		});
 		return false;
 	}
 
@@ -122,9 +126,9 @@ async function validateCatalog() {
 						const contentValidation =
 							await validateInstructionContent(fullInstructionPath);
 						if (!contentValidation.valid) {
-							contentValidation.errors.forEach((error) =>
-								errors.push(`${entry.name}: ${error}`),
-							);
+							contentValidation.errors.forEach((error) => {
+								errors.push(`${entry.name}: ${error}`);
+							});
 							isValid = false;
 						}
 
@@ -200,7 +204,9 @@ async function validateCatalog() {
 		return true;
 	} else {
 		console.log("Validation failed:");
-		errors.forEach((error) => console.log(`- ${error}`));
+		errors.forEach((error) => {
+			console.log(`- ${error}`);
+		});
 		return false;
 	}
 }
