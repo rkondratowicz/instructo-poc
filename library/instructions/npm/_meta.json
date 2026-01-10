@@ -1,6 +1,6 @@
 {
-	"$schema": "../../../schemas/instruction-meta.schema.json",
-	"description": "Package management standards and security practices",
-	"tags": ["npm", "package-management", "security"],
-	"author": "John Smith"
+  "$schema": "../../../schemas/instruction-meta.schema.json",
+  "description": "Package management standards and security practices",
+  "tags": ["npm", "package-management", "security"],
+  "author": "John Smith"
 }

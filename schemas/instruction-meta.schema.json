@@ -1,27 +1,27 @@
 {
-	"$schema": "http://json-schema.org/draft-07/schema#",
-	"title": "Instruction Metadata",
-	"type": "object",
-	"required": ["tags"],
-	"properties": {
-		"$schema": {
-			"type": "string",
-			"description": "URI of the JSON Schema that describes the format of this JSON document"
-		},
-		"tags": {
-			"type": "array",
-			"items": { "type": "string" },
-			"minItems": 1,
-			"description": "Tags used for discovery and classification"
-		},
-		"description": {
-			"type": "string",
-			"description": "Short explanation used in catalogs or UIs"
-		},
-		"author": {
-			"type": "string",
-			"description": "The author of the instruction"
-		}
-	},
-	"additionalProperties": false
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Instruction Metadata",
+  "type": "object",
+  "required": ["tags"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "URI of the JSON Schema that describes the format of this JSON document"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "description": "Tags used for discovery and classification"
+    },
+    "description": {
+      "type": "string",
+      "description": "Short explanation used in catalogs or UIs"
+    },
+    "author": {
+      "type": "string",
+      "description": "The author of the instruction"
+    }
+  },
+  "additionalProperties": false
 }

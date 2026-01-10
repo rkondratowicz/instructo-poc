@@ -1,6 +1,6 @@
 {
-	"$schema": "../../../schemas/instruction-meta.schema.json",
-	"description": "Guidelines for implementing structured logging using the Winston library",
-	"tags": ["logging", "structured-logs", "winston", "nodejs"],
-	"author": "John Smith"
+  "$schema": "../../../schemas/instruction-meta.schema.json",
+  "description": "Guidelines for implementing structured logging using the Winston library",
+  "tags": ["logging", "structured-logs", "winston", "nodejs"],
+  "author": "John Smith"
 }
