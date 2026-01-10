@@ -9,18 +9,6 @@ A proof-of-concept system for managing and cataloging instruction sets with buil
 
 - Catalog management for instruction sets
 - JSON schema validation for metadata
-- **Prompt injection protection** - Scans instruction content for malicious patterns
-
-## Security
-
-This repository includes multiple layers of protection against prompt injection attacks:
-
-### Pattern-based Detection
-The validation script automatically scans all instruction content for common prompt injection patterns such as:
-- "Ignore previous instructions"
-- "Override system prompts"
-- "Jailbreak" attempts
-- "Developer mode" requests
 
 ## Usage
 
@@ -44,16 +32,6 @@ The `scripts/generate-catalog.js` script automatically:
 4. Includes agent guidance for intelligent selection
 
 Run `npm run generate` to update the catalog after adding new resources.
-
-## Agent Guidance System
-
-The `library/agent-guidance.json` file provides LLM agents with:
-
-- **Selection Criteria**: Rules for matching user queries to appropriate resources
-- **Matching Examples**: Concrete examples with reasoning
-- **Prioritization Rules**: Decision-making guidelines
-- **Combination Guidelines**: How to use multiple resources together
-- **Fallback Strategies**: Handling edge cases
 
 ## Adding New Resources
 
@@ -92,10 +70,6 @@ npm run validate
 npm run format
 ```
 
-The pipeline runs automatically on:
-- All pushes to `main` branch
-- All pull requests targeting `main` branch
-
 ## Security Considerations
 
 - Content is automatically scanned for prompt injection patterns
@@ -110,19 +84,3 @@ When contributing new resources:
 - Ensure content is clear and actionable
 - Test catalog generation and validation
 - Update documentation as needed
-
-## Project Structure
-
-```
-├── library/
-│   ├── README.md              # Library structure documentation
-│   ├── agent-guidance.json    # Navigation guidance for LLM agents
-│   ├── instructions/          # Instruction sets for development tasks
-│   ├── prompts/               # Reusable prompt templates
-│   └── skills/                # Specialized skill definitions
-├── schemas/
-│   └── instruction-meta.schema.json
-├── scripts/
-│   ├── generate-catalog.js
-│   └── validate-catalog.js
-└── catalog.json
