@@ -1,36 +1,83 @@
 {
-  "instructions": [
-    {
-      "name": "another",
-      "path": "library/instructions/another/another.instructions.md",
-      "meta": {
-        "description": "Standards for new React components",
-        "tags": [
-          "frontend",
-          "react",
-          "style"
-        ],
-        "languages": [
-          "javascript",
-          "typescript"
-        ]
-      }
-    },
-    {
-      "name": "npm",
-      "path": "library/instructions/npm/npm.instructions.md",
-      "meta": {
-        "description": "Standards for new React components",
-        "tags": [
-          "frontend",
-          "react",
-          "style"
-        ],
-        "languages": [
-          "javascript",
-          "typescript"
-        ]
-      }
-    }
-  ]
+	"agentGuidance": {
+		"overview": "This catalog contains instruction sets, prompts, and skills for various development tasks. Use this guidance to select the most appropriate resources for user projects based on their requirements, technologies, and context.",
+		"selectionCriteria": {
+			"byProjectType": {
+				"webApplication": ["frontend", "react", "styling"],
+				"cliTool": ["npm", "package-management"],
+				"library": ["npm", "package-management"],
+				"api": ["backend", "api", "security"],
+				"mobileApp": ["mobile", "react-native"]
+			},
+			"byTechnology": {
+				"javascript": ["frontend", "react", "npm"],
+				"typescript": ["frontend", "react", "npm"],
+				"node": ["backend", "npm", "package-management"],
+				"react": ["frontend", "react", "styling"],
+				"vue": ["frontend", "vue", "styling"],
+				"angular": ["frontend", "angular", "styling"]
+			},
+			"byTask": {
+				"dependencyManagement": ["npm", "package-management"],
+				"componentDevelopment": ["frontend", "react", "styling"],
+				"securityAudit": ["security", "audit"],
+				"codeReview": ["best-practices", "review"],
+				"deployment": ["deployment", "ci-cd"]
+			}
+		},
+		"matchingExamples": [
+			{
+				"userQuery": "I need to install a new npm package for my React project",
+				"matchingInstructions": ["npm"],
+				"reasoning": "Query mentions npm package installation, which directly matches the npm instruction set focused on package management"
+			},
+			{
+				"userQuery": "How should I structure my new React component?",
+				"matchingInstructions": ["another"],
+				"reasoning": "Query is about React component development standards, matching the another instruction set which covers React component standards"
+			},
+			{
+				"userQuery": "I need to set up a new JavaScript project with dependencies",
+				"matchingInstructions": ["npm"],
+				"reasoning": "Query involves JavaScript project setup and dependencies, matching npm instruction set for package management"
+			}
+		],
+		"prioritizationRules": [
+			"Prioritize instructions with exact tag matches to user technologies",
+			"Prefer comprehensive instruction sets over specialized ones for broad queries",
+			"Consider instruction recency and community adoption",
+			"Factor in user's stated expertise level - provide more detailed guidance for beginners"
+		],
+		"combinationGuidelines": "When multiple instruction sets apply, combine them in order of relevance. For example, for a React project setup you might use npm instructions first for package management, then React component instructions for development standards.",
+		"fallbackStrategies": [
+			"If no exact matches found, look for instructions with related tags (e.g., 'javascript' for 'typescript' queries)",
+			"Consider general best practices instructions when specific ones don't exist",
+			"Ask user for clarification on project type or technologies if matches are unclear",
+			"Suggest creating new instruction sets for uncovered use cases"
+		]
+	},
+	"prompts": {
+		"instructions": [
+			{
+				"name": "another",
+				"path": "library/instructions/another/another.instructions.md",
+				"meta": {
+					"description": "Standards for new React components",
+					"tags": ["frontend", "react", "style"],
+					"languages": ["javascript", "typescript"]
+				}
+			},
+			{
+				"name": "npm",
+				"path": "library/instructions/npm/npm.instructions.md",
+				"meta": {
+					"description": "Standards for new React components",
+					"tags": ["frontend", "react", "style"],
+					"languages": ["javascript", "typescript"]
+				}
+			}
+		],
+		"prompts": [],
+		"skills": []
+	}
 }

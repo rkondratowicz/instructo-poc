@@ -1,6 +1,6 @@
 {
-  "$schema": "../../../schemas/instruction-meta.schema.json",
-  "description": "Standards for new React components",
-  "tags": ["frontend", "react", "style"],
-  "languages": ["javascript", "typescript"]
+	"$schema": "../../../schemas/instruction-meta.schema.json",
+	"description": "Standards for new React components",
+	"tags": ["frontend", "react", "style"],
+	"languages": ["javascript", "typescript"]
 }
