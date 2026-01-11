@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path, { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import Ajv from "ajv";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -8,8 +9,67 @@ const __dirname = dirname(__filename);
 const instructionsDir = path.join(__dirname, "..", "library", "instructions");
 const promptsDir = path.join(__dirname, "..", "library", "prompts");
 const catalogPath = path.join(__dirname, "..", "catalog.json");
+const schemaPath = path.join(
+  __dirname,
+  "..",
+  "schemas",
+  "instruction-meta.schema.json",
+);
 
-function collectResources(dirPath, fileExtension) {
+// Prompt injection patterns to check for
+const INJECTION_PATTERNS = [
+  /ignore\s+(?:all\s+)?previous\s+instructions?/i,
+  /forget\s+(?:all\s+)?previous\s+(?:instructions?|rules)/i,
+  /system\s+prompt/i,
+  /override\s+(?:the\s+)?system/i,
+  /new\s+important\s+instruction/i,
+  /bypass\s+(?:the\s+)?restriction/i,
+  /jailbreak/i,
+  /developer\s+mode/i,
+  /admin\s+mode/i,
+  /unrestricted/i,
+  /uncensored/i,
+  /DAN\s+mode/i, // Common jailbreak persona
+  /assistant.*override/i,
+];
+
+// Function to check for prompt injection patterns
+function checkPromptInjection(text) {
+  const matches = [];
+  for (const pattern of INJECTION_PATTERNS) {
+    const match = text.match(pattern);
+    if (match) {
+      matches.push(match[0]);
+    }
+  }
+  return matches;
+}
+
+// Function to validate content
+async function validateContent(contentPath) {
+  try {
+    const content = fs.readFileSync(contentPath, "utf8");
+    const injectionMatches = checkPromptInjection(content);
+
+    if (injectionMatches.length > 0) {
+      return {
+        valid: false,
+        errors: [
+          `Potential prompt injection patterns detected: ${injectionMatches.join(", ")}`,
+        ],
+      };
+    }
+
+    return { valid: true };
+  } catch (error) {
+    return {
+      valid: false,
+      errors: [`Failed to read content file: ${error.message}`],
+    };
+  }
+}
+
+function collectResources(dirPath, fileExtension, typeName, validateMeta, ajv) {
   const resources = new Map();
 
   if (!fs.existsSync(dirPath)) {
@@ -28,6 +88,13 @@ function collectResources(dirPath, fileExtension) {
           const metaContent = fs.readFileSync(metaPath, "utf8");
           const meta = JSON.parse(metaContent);
 
+          // Validate meta against schema
+          if (!validateMeta(meta)) {
+            throw new Error(
+              `Schema validation failed: ${ajv.errorsText(validateMeta.errors)}`,
+            );
+          }
+
           // Remove $schema and author from meta for comparison
           const { $schema, author, ...cleanMeta } = meta;
 
@@ -43,15 +110,19 @@ function collectResources(dirPath, fileExtension) {
               path.join(__dirname, ".."),
               path.join(resourceDir, resourceFile),
             );
+            const fullResourcePath = path.join(resourceDir, resourceFile);
 
             resources.set(entry.name, {
               name: entry.name,
               path: fullPath,
               meta: cleanMeta,
+              fullPath: fullResourcePath,
             });
           }
-        } catch (_error) {
-          // Skip invalid entries - assume library validation handles this
+        } catch (error) {
+          throw new Error(
+            `Error processing ${typeName} ${entry.name}: ${error.message}`,
+          );
         }
       }
     }
@@ -63,6 +134,23 @@ function collectResources(dirPath, fileExtension) {
 async function validateCatalog() {
   let isValid = true;
   const errors = [];
+
+  // Load JSON schema
+  let ajv;
+  let validateMeta;
+  try {
+    const schemaContent = fs.readFileSync(schemaPath, "utf8");
+    const schema = JSON.parse(schemaContent);
+    ajv = new Ajv();
+    validateMeta = ajv.compile(schema);
+  } catch (error) {
+    errors.push(`Failed to load schema: ${error.message}`);
+    console.log("Validation failed:");
+    errors.forEach((error) => {
+      console.log(`- ${error}`);
+    });
+    return false;
+  }
 
   // Check if catalog.json exists
   if (!fs.existsSync(catalogPath)) {
@@ -88,12 +176,49 @@ async function validateCatalog() {
     return false;
   }
 
-  // Collect actual resource files (without validation)
-  const actualInstructions = collectResources(
-    instructionsDir,
-    ".instructions.md",
-  );
-  const actualPrompts = collectResources(promptsDir, ".prompts.md");
+  // Collect actual resource files
+  let actualInstructions = new Map();
+  let actualPrompts = new Map();
+  try {
+    actualInstructions = collectResources(
+      instructionsDir,
+      ".instructions.md",
+      "instruction",
+      validateMeta,
+      ajv,
+    );
+    actualPrompts = collectResources(
+      promptsDir,
+      ".prompts.md",
+      "prompt",
+      validateMeta,
+      ajv,
+    );
+  } catch (error) {
+    errors.push(error.message);
+    isValid = false;
+  }
+
+  // Validate content for injection patterns
+  for (const [name, resource] of actualInstructions) {
+    const contentValidation = await validateContent(resource.fullPath);
+    if (!contentValidation.valid) {
+      contentValidation.errors.forEach((error) => {
+        errors.push(`Instruction ${name}: ${error}`);
+      });
+      isValid = false;
+    }
+  }
+
+  for (const [name, resource] of actualPrompts) {
+    const contentValidation = await validateContent(resource.fullPath);
+    if (!contentValidation.valid) {
+      contentValidation.errors.forEach((error) => {
+        errors.push(`Prompt ${name}: ${error}`);
+      });
+      isValid = false;
+    }
+  }
 
   // Check catalog entries against actual files
   const catalogInstructionNames = new Set();
@@ -153,7 +278,7 @@ async function validateCatalog() {
   }
 
   // Check for missing entries in catalog
-  for (const [name] of actualInstructions) {
+  for (const [name, _actual] of actualInstructions) {
     if (!catalogInstructionNames.has(name)) {
       errors.push(
         `Instruction "${name}" exists in filesystem but missing from catalog`,
@@ -162,7 +287,7 @@ async function validateCatalog() {
     }
   }
 
-  for (const [name] of actualPrompts) {
+  for (const [name, _actual] of actualPrompts) {
     if (!catalogPromptNames.has(name)) {
       errors.push(
         `Prompt "${name}" exists in filesystem but missing from catalog`,
@@ -195,12 +320,10 @@ async function validateCatalog() {
   }
 
   if (isValid) {
-    console.log(
-      "Catalog validation passed: catalog.json matches the filesystem",
-    );
+    console.log("Validation passed: catalog.json matches the library files");
     return true;
   } else {
-    console.log("Catalog validation failed:");
+    console.log("Validation failed:");
     errors.forEach((error) => {
       console.log(`- ${error}`);
     });
