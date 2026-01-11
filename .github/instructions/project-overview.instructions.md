@@ -31,12 +31,14 @@ applyTo: '**'
 2. **Metadata Creation**: Use `.github/prompts/create-metadata.prompt.md` to auto-generate comprehensive metadata
 3. **Catalog Update**: Run `npm run generate` (never edit `catalog.json` manually)
 4. **Validation**: Run `npm run validate` for schema compliance and security checks
+5. **Formatting**: Run `npm run format` to ensure consistent code style
 
 ### Safe Modification Guidelines
 
 - **Never manually edit** `catalog.json` - it's auto-generated and changes will be overwritten
 - **Use provided prompts** for metadata generation to ensure proper tagging and security
 - **Run validation** after any changes to detect injection patterns or schema violations
+- **Run formatting** after any changes to ensure consistent code style
 - **Follow naming conventions**: `[name].instructions.md`, `[name].prompts.md`, `[name].skills.md`
 - **Test catalog generation** locally before committing
 - **CI/CD enforces** Biome formatting and catalog integrity checks
