@@ -22,6 +22,16 @@ npm run validate
 npm run generate
 ```
 
+### Using the Catalog with VSCode Agents
+
+To leverage the catalog for development tasks:
+
+1. **Find Relevant Prompts**: Message your VSCode agent (e.g., GitHub Copilot) with queries about specific technologies or tasks
+2. **Provide Catalog URL**: Include the URL to `catalog.json` in your message to allow the agent to browse and select appropriate instruction sets, prompts, or skills
+3. **Example Query**: "Find useful prompts for Node.js development using this catalog: https://github.com/rkondratowicz/instructo-poc/blob/main/catalog.json"
+
+The catalog contains structured guidance for various development scenarios, with metadata for intelligent selection.
+
 ## Catalog Generation
 
 The `scripts/generate-catalog.js` script automatically:
