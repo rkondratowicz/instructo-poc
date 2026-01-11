@@ -9,23 +9,17 @@
     "matchingExamples": [
       {
         "userQuery": "I need to install a new npm package for my React project",
-        "matchingResources": [
-          "instructions/npm"
-        ],
+        "matchingResources": ["instructions/npm"],
         "reasoning": "Query involves npm package management, matching the npm instruction set"
       },
       {
         "userQuery": "How should I structure my new React component?",
-        "matchingResources": [
-          "instructions/react-component"
-        ],
+        "matchingResources": ["instructions/react-component"],
         "reasoning": "Query is about React component development, matching component guidelines"
       },
       {
         "userQuery": "I need to set up logging in my Node.js application",
-        "matchingResources": [
-          "instructions/winston-logging"
-        ],
+        "matchingResources": ["instructions/winston-logging"],
         "reasoning": "Query requires logging setup, matching winston-logging instructions for Node.js"
       }
     ],
@@ -49,11 +43,7 @@
         "path": "library/instructions/npm/npm.instructions.md",
         "meta": {
           "description": "Package management standards and security practices",
-          "tags": [
-            "npm",
-            "package-management",
-            "security"
-          ]
+          "tags": ["npm", "package-management", "security"]
         }
       },
       {
@@ -61,12 +51,7 @@
         "path": "library/instructions/winston-logging/winston-logging.instructions.md",
         "meta": {
           "description": "Guidelines for implementing structured logging using the Winston library",
-          "tags": [
-            "logging",
-            "structured-logs",
-            "winston",
-            "nodejs"
-          ]
+          "tags": ["logging", "structured-logs", "winston", "nodejs"]
         }
       }
     ],
