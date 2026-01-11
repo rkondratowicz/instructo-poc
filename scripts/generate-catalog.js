@@ -31,8 +31,8 @@ function readResourceType(dirPath, fileExtension, typeName) {
           const metaContent = fs.readFileSync(metaPath, "utf8");
           const meta = JSON.parse(metaContent);
 
-          // Remove $schema from meta
-          const { $schema, ...cleanMeta } = meta;
+          // Remove $schema and author from meta
+          const { $schema, author, ...cleanMeta } = meta;
 
           // Find the resource file
           const resourceFiles = fs

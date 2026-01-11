@@ -26,7 +26,6 @@
     "Match exact tags from user technologies and project type",
     "Prefer instructions for foundational tasks, prompts for AI interactions, skills for specialized capabilities"
   ],
-  "combinationGuidelines": "Combine resources by relevance: e.g., use npm instructions for setup, then specific technology instructions. Apply prompts within instruction workflows when appropriate.",
   "fallbackStrategies": [
     "Use related tags if exact matches unavailable (e.g., 'javascript' for 'typescript')",
     "Seek clarification on unclear queries"
