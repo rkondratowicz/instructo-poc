@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path, { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import Ajv from "ajv";
+import { checkContentSecurity } from "./security-checks.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -16,46 +17,17 @@ const schemaPath = path.join(
   "instruction-meta.schema.json",
 );
 
-// Prompt injection patterns to check for
-const INJECTION_PATTERNS = [
-  /ignore\s+(?:all\s+)?previous\s+instructions?/i,
-  /forget\s+(?:all\s+)?previous\s+(?:instructions?|rules)/i,
-  /system\s+prompt/i,
-  /override\s+(?:the\s+)?system/i,
-  /new\s+important\s+instruction/i,
-  /bypass\s+(?:the\s+)?restriction/i,
-  /jailbreak/i,
-  /developer\s+mode/i,
-  /admin\s+mode/i,
-  /unrestricted/i,
-  /uncensored/i,
-  /DAN\s+mode/i, // Common jailbreak persona
-  /assistant.*override/i,
-];
-
-// Function to check for prompt injection patterns
-function checkPromptInjection(text) {
-  const matches = [];
-  for (const pattern of INJECTION_PATTERNS) {
-    const match = text.match(pattern);
-    if (match) {
-      matches.push(match[0]);
-    }
-  }
-  return matches;
-}
-
 // Function to validate content
 async function validateContent(contentPath) {
   try {
     const content = fs.readFileSync(contentPath, "utf8");
-    const injectionMatches = checkPromptInjection(content);
+    const securityMatches = checkContentSecurity(content);
 
-    if (injectionMatches.length > 0) {
+    if (securityMatches.length > 0) {
       return {
         valid: false,
         errors: [
-          `Potential prompt injection patterns detected: ${injectionMatches.join(", ")}`,
+          `Potential security issues detected: ${securityMatches.join(", ")}`,
         ],
       };
     }

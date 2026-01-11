@@ -29,7 +29,7 @@ To add a new resource:
 1. Create a new directory under the appropriate type folder in `library/`
 2. Create the content file with the correct extension (`.instructions.md` or `.prompts.md`)
 3. Use the `create-metadata` prompt to automatically generate the `_meta.json` file:
-   - The prompt analyzes your content and creates appropriate metadata with tags, description, and languages
+   - The prompt analyzes your content and creates appropriate metadata with tags and description
    - Run the agent with the `.github/prompts/create-metadata.prompt.md` prompt, providing your content file
 4. Run `npm run generate` to update the catalog
 

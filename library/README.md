@@ -26,7 +26,6 @@ Each resource directory contains a `_meta.json` file that provides:
 
 - **Tags**: Keywords for discovery and categorization
 - **Description**: Human-readable explanation of the resource
-- **Languages**: Programming languages the resource applies to
 - **Schema validation**: All metadata follows `schemas/instruction-meta.schema.json`
 
 Example `_meta.json`:
@@ -34,8 +33,7 @@ Example `_meta.json`:
 {
   "$schema": "../../schemas/instruction-meta.schema.json",
   "description": "Standards for new React components",
-  "tags": ["frontend", "react", "styling"],
-  "languages": ["javascript", "typescript"]
+  "tags": ["frontend", "react", "styling"]
 }
 ```
 
