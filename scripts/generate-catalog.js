@@ -8,7 +8,6 @@ const __dirname = dirname(__filename);
 const libraryDir = path.join(__dirname, "..", "library");
 const instructionsDir = path.join(libraryDir, "instructions");
 const promptsDir = path.join(libraryDir, "prompts");
-const skillsDir = path.join(libraryDir, "skills");
 const guidancePath = path.join(libraryDir, "agent-guidance.json");
 const catalogPath = path.join(__dirname, "..", "catalog.json");
 
@@ -71,7 +70,6 @@ function generateCatalog() {
     "instruction",
   );
   const prompts = readResourceType(promptsDir, ".prompts.md", "prompt");
-  const skills = readResourceType(skillsDir, ".skills.md", "skill");
 
   // Read agent guidance
   let agentGuidance = {};
@@ -89,7 +87,6 @@ function generateCatalog() {
     prompts: {
       instructions: instructions,
       prompts: prompts,
-      skills: skills,
     },
   };
 

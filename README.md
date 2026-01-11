@@ -17,7 +17,7 @@ A proof-of-concept system for managing and cataloging instruction sets with buil
 To leverage the catalog for development tasks:
 
 1. **Find Relevant Prompts**: Message your VSCode agent (e.g., GitHub Copilot) with queries about specific technologies or tasks
-2. **Provide Catalog URL**: Include the URL to `catalog.json` in your message to allow the agent to browse and select appropriate instruction sets, prompts, or skills
+2. **Provide Catalog URL**: Include the URL to `catalog.json` in your message to allow the agent to browse and select appropriate instruction sets or prompts
 3. **Example Query**: "Find useful prompts for Node.js development using this catalog: https://github.com/rkondratowicz/instructo-poc/blob/main/catalog.json"
 
 The catalog contains structured guidance for various development scenarios, with metadata for intelligent selection.
@@ -27,7 +27,7 @@ The catalog contains structured guidance for various development scenarios, with
 To add a new resource:
 
 1. Create a new directory under the appropriate type folder in `library/`
-2. Create the content file with the correct extension (`.instructions.md`, `.prompt.md`, or skill file)
+2. Create the content file with the correct extension (`.instructions.md` or `.prompts.md`)
 3. Use the `create-metadata` prompt to automatically generate the `_meta.json` file:
    - The prompt analyzes your content and creates appropriate metadata with tags, description, and languages
    - Run the agent with the `.github/prompts/create-metadata.prompt.md` prompt, providing your content file
@@ -73,3 +73,7 @@ When contributing new resources:
 - Ensure content is clear and actionable
 - Test catalog generation and validation
 - Update documentation as needed
+
+## TODO
+
+- Add support for skills resources in the future

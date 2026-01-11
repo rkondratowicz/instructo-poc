@@ -1,6 +1,6 @@
 # Library Structure
 
-This directory contains the instruction sets, prompts, and skills that form the core of the Instructo POC system. All resources are automatically cataloged and made available to LLM agents through the generated `catalog.json` file.
+This directory contains the instruction sets and prompts that form the core of the Instructo POC system. All resources are automatically cataloged and made available to LLM agents through the generated `catalog.json` file.
 
 ## Directory Structure
 
@@ -12,14 +12,10 @@ library/
 │   ├── [instruction-name]/
 │   │   ├── _meta.json        # Metadata and categorization
 │   │   └── [instruction-name].instructions.md  # Content file
-├── prompts/                  # Reusable prompt templates
-│   └── [prompt-name]/
-│       ├── _meta.json        # Metadata and categorization
-│       └── [prompt-name].prompts.md  # Content file
-└── skills/                   # Specialized skill definitions
-    └── [skill-name]/
+└── prompts/                  # Reusable prompt templates
+    └── [prompt-name]/
         ├── _meta.json        # Metadata and categorization
-        └── [skill-name].skills.md  # Content file
+        └── [prompt-name].prompts.md  # Content file
 ```
 
 ## File Types and Naming Conventions
@@ -49,7 +45,6 @@ Each resource type has its own file extension:
 
 - **Instructions**: `[name].instructions.md` - Step-by-step development guidelines
 - **Prompts**: `[name].prompts.md` - Reusable prompt templates for AI interactions
-- **Skills**: `[name].skills.md` - Specialized capability definitions
 
 ## Resource Types
 
@@ -71,11 +66,3 @@ Prompt templates are reusable AI interaction patterns for specific scenarios:
 - Standardized query formats
 - Context-aware prompting strategies
 - Task-specific communication templates
-
-### Skills
-
-Skill definitions describe specialized capabilities that can be invoked:
-
-- Tool integrations
-- Specialized processing abilities
-- Domain-specific expertise areas

@@ -1,20 +1,23 @@
 {
   "agentGuidance": {
-    "overview": "This catalog contains instruction sets, prompts, and skills for development tasks. Agents should use this guidance to select and apply the most relevant resources based on user queries, project context, and technologies involved.",
+    "overview": "This catalog contains instruction sets and prompts for development tasks. Agents should use this guidance to select and apply the most relevant resources based on user queries, project context, and technologies involved.",
     "resourceTypes": {
       "instructions": "Step-by-step development guidelines and best practices",
-      "prompts": "Reusable AI interaction templates for specific scenarios",
-      "skills": "Specialized capability definitions for advanced tasks"
+      "prompts": "Reusable AI interaction templates for specific scenarios"
     },
     "matchingExamples": [
       {
         "userQuery": "Find prompts related to npm",
-        "matchingResources": ["instructions/npm"],
+        "matchingResources": [
+          "instructions/npm"
+        ],
         "reasoning": "Query involves npm package management, matching the npm instruction set"
       },
       {
         "userQuery": "Find prompts related to logging in my Node.js application",
-        "matchingResources": ["instructions/winston-logging"],
+        "matchingResources": [
+          "instructions/winston-logging"
+        ],
         "reasoning": "Query requires logging setup, matching winston-logging instructions for Node.js"
       }
     ],
@@ -22,10 +25,13 @@
       "Match exact tags from user technologies and project type",
       "Prefer instructions for foundational tasks, prompts for AI interactions, skills for specialized capabilities"
     ],
-    "fallbackStrategies": ["Seek clarification on unclear queries"],
+    "fallbackStrategies": [
+      "Seek clarification on unclear queries"
+    ],
     "responseGuidelines": [
       "Present users with a numbered list of matching resources, including clickable full URLs (constructed as https://github.com/rkondratowicz/instructo-poc/blob/main/{path}) and brief explanations of why they might meet their needs",
-      "After presenting the list, ask the user to specify the numbers of the prompts they want to apply to their project"
+      "After presenting the list, ask the user to specify the numbers of the prompts they want to apply to their project",
+      "Once the user selects the desired resources, download only the markdown files (not metadata) from the GitHub repository and place them in the appropriate directory within the user's project (.github/instructions for instructions, .github/prompts for prompts), creating the directories if they do not already exist"
     ]
   },
   "prompts": {
@@ -35,7 +41,11 @@
         "path": "library/instructions/npm/npm.instructions.md",
         "meta": {
           "description": "Package management standards and security practices",
-          "tags": ["npm", "package-management", "security"]
+          "tags": [
+            "npm",
+            "package-management",
+            "security"
+          ]
         }
       },
       {
@@ -43,11 +53,15 @@
         "path": "library/instructions/winston-logging/winston-logging.instructions.md",
         "meta": {
           "description": "Guidelines for implementing structured logging using the Winston library",
-          "tags": ["logging", "structured-logs", "winston", "nodejs"]
+          "tags": [
+            "logging",
+            "structured-logs",
+            "winston",
+            "nodejs"
+          ]
         }
       }
     ],
-    "prompts": [],
-    "skills": []
+    "prompts": []
   }
 }

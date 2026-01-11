@@ -1,9 +1,8 @@
 {
-  "overview": "This catalog contains instruction sets, prompts, and skills for development tasks. Agents should use this guidance to select and apply the most relevant resources based on user queries, project context, and technologies involved.",
+  "overview": "This catalog contains instruction sets and prompts for development tasks. Agents should use this guidance to select and apply the most relevant resources based on user queries, project context, and technologies involved.",
   "resourceTypes": {
     "instructions": "Step-by-step development guidelines and best practices",
-    "prompts": "Reusable AI interaction templates for specific scenarios",
-    "skills": "Specialized capability definitions for advanced tasks"
+    "prompts": "Reusable AI interaction templates for specific scenarios"
   },
   "matchingExamples": [
     {
@@ -24,6 +23,7 @@
   "fallbackStrategies": ["Seek clarification on unclear queries"],
   "responseGuidelines": [
     "Present users with a numbered list of matching resources, including clickable full URLs (constructed as https://github.com/rkondratowicz/instructo-poc/blob/main/{path}) and brief explanations of why they might meet their needs",
-    "After presenting the list, ask the user to specify the numbers of the prompts they want to apply to their project"
+    "After presenting the list, ask the user to specify the numbers of the prompts they want to apply to their project",
+    "Once the user selects the desired resources, download only the markdown files (not metadata) from the GitHub repository and place them in the appropriate directory within the user's project (.github/instructions for instructions, .github/prompts for prompts), creating the directories if they do not already exist"
   ]
 }

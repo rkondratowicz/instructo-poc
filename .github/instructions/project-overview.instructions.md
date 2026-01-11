@@ -4,14 +4,13 @@ applyTo: '**'
 
 ## Project Overview: Instructo POC
 
-**Instructo POC** is a proof-of-concept system for securely managing and cataloging instruction sets, prompts, and skills for development tasks. It provides LLM agents with structured guidance while including multiple layers of protection against prompt injection attacks.
+**Instructo POC** is a proof-of-concept system for securely managing and cataloging instruction sets and prompts for development tasks. It provides LLM agents with structured guidance while including multiple layers of protection against prompt injection attacks.
 
 ### Core Architecture
 
-- **Library Structure**: Organized content in `library/` with three main types:
+- **Library Structure**: Organized content in `library/` with two main types:
   - `instructions/`: Step-by-step development guidelines (`.instructions.md`)
-  - `prompts/`: Reusable AI interaction templates (`.prompts.md`) 
-  - `skills/`: Specialized capability definitions (`.skills.md`)
+  - `prompts/`: Reusable AI interaction templates (`.prompts.md`)
 
 - **Metadata System**: Each resource has a `_meta.json` file with tags, description, and author, validated against `schemas/instruction-meta.schema.json`
 
