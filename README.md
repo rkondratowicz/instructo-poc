@@ -12,16 +12,6 @@ A proof-of-concept system for managing and cataloging instruction sets with buil
 
 ## Usage
 
-### Basic Validation
-```bash
-npm run validate
-```
-
-### Generate Catalog
-```bash
-npm run generate
-```
-
 ### Using the Catalog with VSCode Agents
 
 To leverage the catalog for development tasks:
@@ -32,18 +22,7 @@ To leverage the catalog for development tasks:
 
 The catalog contains structured guidance for various development scenarios, with metadata for intelligent selection.
 
-## Catalog Generation
-
-The `scripts/generate-catalog.js` script automatically:
-
-1. Scans all resource directories in `library/`
-2. Reads metadata and content files
-3. Generates `catalog.json` with navigation guidance
-4. Includes agent guidance for intelligent selection
-
-Run `npm run generate` to update the catalog after adding new resources.
-
-## Adding New Resources
+### Adding New Resources
 
 To add a new resource:
 
