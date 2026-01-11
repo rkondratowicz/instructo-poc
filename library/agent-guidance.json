@@ -7,17 +7,12 @@
   },
   "matchingExamples": [
     {
-      "userQuery": "I need to install a new npm package for my React project",
+      "userQuery": "Find prompts related to npm",
       "matchingResources": ["instructions/npm"],
       "reasoning": "Query involves npm package management, matching the npm instruction set"
     },
     {
-      "userQuery": "How should I structure my new React component?",
-      "matchingResources": ["instructions/react-component"],
-      "reasoning": "Query is about React component development, matching component guidelines"
-    },
-    {
-      "userQuery": "I need to set up logging in my Node.js application",
+      "userQuery": "Find prompts related to logging in my Node.js application",
       "matchingResources": ["instructions/winston-logging"],
       "reasoning": "Query requires logging setup, matching winston-logging instructions for Node.js"
     }
@@ -27,7 +22,6 @@
     "Prefer instructions for foundational tasks, prompts for AI interactions, skills for specialized capabilities"
   ],
   "fallbackStrategies": [
-    "Use related tags if exact matches unavailable (e.g., 'javascript' for 'typescript')",
     "Seek clarification on unclear queries"
   ],
   "responseGuidelines": [
