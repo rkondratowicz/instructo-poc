@@ -105,8 +105,8 @@ async function validateCatalog() {
           const metaContent = fs.readFileSync(metaPath, "utf8");
           const meta = JSON.parse(metaContent);
 
-          // Remove $schema from meta for comparison
-          const { $schema, ...cleanMeta } = meta;
+          // Remove $schema and author from meta for comparison
+          const { $schema, author, ...cleanMeta } = meta;
 
           // Find the .instructions.md file
           const instructionFiles = fs
