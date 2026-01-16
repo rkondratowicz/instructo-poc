@@ -1,4 +1,4 @@
-# Instructo POC
+# Instructo
 
 [![CI](https://github.com/rkondratowicz/instructo-poc/actions/workflows/ci.yml/badge.svg)](https://github.com/rkondratowicz/instructo-poc/actions/workflows/ci.yml)
 [![Biome](https://img.shields.io/badge/Biome-enabled-60a5fa)](https://biomejs.dev/)
@@ -12,13 +12,17 @@ A proof-of-concept system for managing and cataloging instruction sets with buil
 
 ## Usage
 
-### Using the Catalog with VSCode Agents
+### Using the Catalog with VS Code Agents
 
 To leverage the catalog for development tasks:
 
-1. **Find Relevant Prompts**: Message your VSCode agent (e.g., GitHub Copilot) with queries about specific technologies or tasks
-2. **Provide Catalog URL**: Include the URL to `catalog.json` in your message to allow the agent to browse and select appropriate instruction sets or prompts
-3. **Example Query**: "Find useful prompts for Node.js development using this catalog: https://github.com/rkondratowicz/instructo-poc/blob/main/catalog.json"
+1. **Find Relevant Prompts**: Message your VS Code agent (e.g., GitHub Copilot) with queries about specific technologies or tasks
+2. **Provide Catalog URL**: Include the URL to `catalog.json` in your message to allow the agent to browse and select appropriate instruction sets or prompts (raw URL works best)
+3. **Example Query** (copy/paste):
+
+```text
+Analyze this project and find useful prompts using this catalog: https://raw.githubusercontent.com/rkondratowicz/instructo-poc/main/catalog.json
+```
 
 The catalog contains structured guidance for various development scenarios, with metadata for intelligent selection.
 
