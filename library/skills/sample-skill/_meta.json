@@ -1,0 +1,6 @@
+{
+  "$schema": "../../schemas/meta.schema.json",
+  "tags": ["example", "reference", "agent-skills"],
+  "description": "A sample Agent Skill demonstrating the agentskills.io specification format",
+  "author": "Instructo Team"
+}

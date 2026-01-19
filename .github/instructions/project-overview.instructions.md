@@ -4,15 +4,18 @@ applyTo: '**'
 
 ## Project Overview: Instructo POC
 
-**Instructo POC** is a proof-of-concept system for securely managing and cataloging instruction sets and prompts for development tasks. It provides LLM agents with structured guidance while including multiple layers of protection against prompt injection attacks.
+**Instructo POC** is a proof-of-concept system for securely managing and cataloging instruction sets, prompts, and Agent Skills for development tasks. It provides LLM agents with structured guidance while including multiple layers of protection against prompt injection attacks.
 
 ### Core Architecture
 
-- **Library Structure**: Organized content in `library/` with two main types:
+- **Library Structure**: Organized content in `library/` with three main types:
   - `instructions/`: Step-by-step development guidelines (`.instructions.md`)
   - `prompts/`: Reusable AI interaction templates (`.prompts.md`)
+  - `skills/`: Agent Skills following the [agentskills.io specification](https://agentskills.io/specification) (`.skills.md`)
 
-- **Metadata System**: Each resource has a `_meta.json` file with tags, description, and author, validated against `schemas/instruction-meta.schema.json`
+- **Metadata System**: Each resource has a `_meta.json` file with tags, description, and author
+  - All resource types validated against `schemas/meta.schema.json`
+  - Skills may include additional optional fields: `compatibility`, `license`
 
 - **Catalog Generation**: `scripts/generate-catalog.js` automatically scans the library and creates `catalog.json` with navigation guidance
 
@@ -27,10 +30,24 @@ applyTo: '**'
 ### Development Workflow
 
 1. **Adding Resources**: Create directory under appropriate type folder with `_meta.json` and content file
+   - Instructions/Prompts: Single markdown file in directory
+   - Skills: Directory structure with `SKILL.md` (deployed to project root when used)
 2. **Metadata Creation**: Use `.github/prompts/create-metadata.prompt.md` to auto-generate comprehensive metadata
 3. **Catalog Update**: Run `npm run generate` (never edit `catalog.json` manually)
 4. **Validation**: Run `npm run validate` for schema compliance and security checks
 5. **Formatting**: Run `npm run format` to ensure consistent code style
+
+### Resource Deployment Differences
+
+**Instructions and Prompts:**
+- Deployed to `.github/instructions/` and `.github/prompts/` in user projects
+- Single markdown files copied from library
+
+**Skills:**
+- Deployed to `.github/skills/` in user projects
+- Follow [agentskills.io specification](https://agentskills.io/specification)
+- Directory structure: `skill-name/SKILL.md` (required) + optional `scripts/`, `references/`, `assets/` subdirectories
+- Entire directory structure copied to maintain skill integrity
 
 ### Safe Modification Guidelines
 

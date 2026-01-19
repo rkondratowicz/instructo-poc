@@ -9,12 +9,13 @@ const __dirname = dirname(__filename);
 
 const instructionsDir = path.join(__dirname, "..", "library", "instructions");
 const promptsDir = path.join(__dirname, "..", "library", "prompts");
+const skillsDir = path.join(__dirname, "..", "library", "skills");
 const catalogPath = path.join(__dirname, "..", "catalog.json");
-const schemaPath = path.join(
+const metaSchemaPath = path.join(
   __dirname,
   "..",
   "schemas",
-  "instruction-meta.schema.json",
+  "meta.schema.json",
 );
 
 // Function to validate content
@@ -111,10 +112,10 @@ async function validateCatalog() {
   let ajv;
   let validateMeta;
   try {
-    const schemaContent = fs.readFileSync(schemaPath, "utf8");
-    const schema = JSON.parse(schemaContent);
+    const metaSchemaContent = fs.readFileSync(metaSchemaPath, "utf8");
+    const metaSchema = JSON.parse(metaSchemaContent);
     ajv = new Ajv();
-    validateMeta = ajv.compile(schema);
+    validateMeta = ajv.compile(metaSchema);
   } catch (error) {
     errors.push(`Failed to load schema: ${error.message}`);
     console.log("Validation failed:");
@@ -151,6 +152,7 @@ async function validateCatalog() {
   // Collect actual resource files
   let actualInstructions = new Map();
   let actualPrompts = new Map();
+  let actualSkills = new Map();
   try {
     actualInstructions = collectResources(
       instructionsDir,
@@ -163,6 +165,13 @@ async function validateCatalog() {
       promptsDir,
       ".prompts.md",
       "prompt",
+      validateMeta,
+      ajv,
+    );
+    actualSkills = collectResources(
+      skillsDir,
+      ".skills.md",
+      "skill",
       validateMeta,
       ajv,
     );
@@ -187,6 +196,16 @@ async function validateCatalog() {
     if (!contentValidation.valid) {
       contentValidation.errors.forEach((error) => {
         errors.push(`Prompt ${name}: ${error}`);
+      });
+      isValid = false;
+    }
+  }
+
+  for (const [name, resource] of actualSkills) {
+    const contentValidation = await validateContent(resource.fullPath);
+    if (!contentValidation.valid) {
+      contentValidation.errors.forEach((error) => {
+        errors.push(`Skill ${name}: ${error}`);
       });
       isValid = false;
     }
@@ -268,6 +287,44 @@ async function validateCatalog() {
     }
   }
 
+  // Check skills catalog entries
+  const catalogSkillNames = new Set();
+  for (const skill of catalog.prompts?.skills || []) {
+    catalogSkillNames.add(skill.name);
+
+    const actual = actualSkills.get(skill.name);
+    if (!actual) {
+      errors.push(
+        `Skill "${skill.name}" in catalog but not found in filesystem`,
+      );
+      isValid = false;
+      continue;
+    }
+
+    // Check path
+    if (skill.path !== actual.path) {
+      errors.push(
+        `Path mismatch for "${skill.name}": expected "${actual.path}", got "${skill.path}"`,
+      );
+      isValid = false;
+    }
+
+    // Check meta
+    if (JSON.stringify(skill.meta) !== JSON.stringify(actual.meta)) {
+      errors.push(`Meta mismatch for "${skill.name}"`);
+      isValid = false;
+    }
+  }
+
+  for (const [name, _actual] of actualSkills) {
+    if (!catalogSkillNames.has(name)) {
+      errors.push(
+        `Skill "${name}" exists in filesystem but missing from catalog`,
+      );
+      isValid = false;
+    }
+  }
+
   // Check if catalog is sorted by name
   const sortedInstructions = [...(catalog.prompts?.instructions || [])].sort(
     (a, b) => a.name.localeCompare(b.name),
@@ -288,6 +345,17 @@ async function validateCatalog() {
     JSON.stringify(sortedPrompts);
   if (!isPromptsSorted) {
     errors.push("Prompts in catalog are not sorted by name");
+    isValid = false;
+  }
+
+  const sortedSkills = [...(catalog.prompts?.skills || [])].sort((a, b) =>
+    a.name.localeCompare(b.name),
+  );
+  const isSkillsSorted =
+    JSON.stringify(catalog.prompts?.skills || []) ===
+    JSON.stringify(sortedSkills);
+  if (!isSkillsSorted) {
+    errors.push("Skills in catalog are not sorted by name");
     isValid = false;
   }
 
